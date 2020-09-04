@@ -1,7 +1,7 @@
 # ONS
 import math
 
-def string_to_tokens(s): #finkcja zamienia string (formułę matematyczną) w listę wypełnioną tokenami (typu string)
+def string_to_tokens(s): #funkcja zamienia string (formułę matematyczną) w listę wypełnioną tokenami (typu string)
     tokens=[]
     symbols=["^","*","/","+","-","(",")"]
     functions=["abs",'cos','exp','log','sin','sqrt','tan','cosh','sinh','tanh','acos','asin','atan']
@@ -28,8 +28,13 @@ def string_to_tokens(s): #finkcja zamienia string (formułę matematyczną) w li
                     tokens.append(float(number))
                     number=""
             if word!="":
-                tokens.append(word)
-                word=""
+                if (index==2 and s[0]=="-") or ( index > 2 and s[index-2]=="-" and s[index-3]=="(") :
+                     tokens.pop()
+                     tokens.append("-"+word)
+                     word=""
+                else:
+                    tokens.append(word)
+                    word=""
             tokens.append(s[index])
         elif s[index]  in ["1","2","3","4","5","6","7","8","9","0"]:
             number+=s[index]
@@ -51,12 +56,12 @@ def string_to_tokens(s): #finkcja zamienia string (formułę matematyczną) w li
         i-=1
         if i==0:
             return tokens
-#########################################################################################################
+#####################################################################
+
 def ONP(tokens): #funkcja zmienia listę tokenów w formułę zapisaną w ONP
     S=[]
     Q=[]
     D={"abs":4,'cos':4,'exp':4,'log':4,'sin':4,'sqrt':4,'tan':4,'cosh':4,'sinh':4,'tanh':4,'acos':4,'asin':4,'atan':4,"^":3,"*":2,"/":2,"+":1,"-":1,"(":0}
-    
     for t in tokens:
         if t == "(":
             S.append(t)
@@ -76,10 +81,10 @@ def ONP(tokens): #funkcja zmienia listę tokenów w formułę zapisaną w ONP
     return Q
 
 ###########################################################################################################
-def calculate_ONP(R):
+
+def calculate_ONP(R): #funkcja oblicza formułę zapisaną w ONP
     temp=0
     S=[]
-    symbols = "^":+,"*":+,"/":+,"+":+,"-":+]
     functions={"abs":abs,'cos':math.cos,'exp':math.exp,'log':math.log10,'sin':math.sin,'sqrt':math.sqrt,'tan':math.tan,'cosh':math.cosh,'sinh':math.sinh,'tanh':math.tanh,'acos':math.acos,'asin':math.asin,'atan':math.atan}
     for t in R:
         if type(t)==float:
@@ -87,10 +92,9 @@ def calculate_ONP(R):
         elif t in functions:
             temp=S.pop()
             S.append(functions[t](temp))
-        elif t in ["^":+,"*":+,"/":+,"+":+,"-":+]:
+        elif t in ["^","*","/","+","-"]:
             a=S.pop()
             b=S.pop()
-            """
             if t=="+":
                 a=a+b
             elif t=="-":
@@ -101,18 +105,56 @@ def calculate_ONP(R):
                 a=b/a
             elif t=="^":
                 a=b^a
-                """
-            a=
+            S.append(a)
+    return S.pop()
+
+##############################################################################################################      
+            
+def calculate_ONP_with_x(R,x): #funkcja oblicza formułę zapisaną w ONP podstawiając zadaną cyfrę za x
+    temp=0
+    S=[]
+    functions={"abs":abs,'cos':math.cos,'exp':math.exp,'log':math.log10,'sin':math.sin,'sqrt':math.sqrt,'tan':math.tan,'cosh':math.cosh,'sinh':math.sinh,'tanh':math.tanh,'acos':math.acos,'asin':math.asin,'atan':math.atan}
+    for t in R:
+        if t  == "x":
+            S.append(x)
+        if type(t)==float:
+            S.append(t)
+        elif t in functions:
+            temp=S.pop()
+            S.append(functions[t](temp))
+        elif t in ["^","*","/","+","-"]:
+            a=S.pop()
+            b=S.pop()
+            if t=="+":
+                a=a+b
+            elif t=="-":
+                a=b-a
+            elif t=="*":
+                a=a*b
+            elif t=="/":
+                a=b/a
+            elif t=="^":
+                a=b^a
             S.append(a)
     return S.pop()
             
-            
-        
+#############################################################################################################
+
+def multiple_calculations(min_x,max_x,step,x,R): 
+     """funkcja wykonuje operację
+        funkcji calculate_ONP_with_x wielokrotnie, 
+        na zadanymprzedziale z krokiem, zwraca listę wyników """
+     calculations=[]
+     for i in range(min_x,max_x,step):
+        calculations.append(calculate_ONP_with_x(R,x))
+     return calculations
+
+##############################################################################################################
 
 print("Podaj wyrażenie")
 input_string=input()
 tokens=string_to_tokens(input_string)
 Q=ONP(tokens)
-print(Q)
-#print(''.join([str(elem) for elem in Q]))
-print(calculate_ONP(Q))
+print(''.join([str(elem) for elem in Q]))
+
+
