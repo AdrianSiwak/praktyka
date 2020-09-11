@@ -1,0 +1,55 @@
+body {
+  background-color: lightgrey;
+  
+}
+
+h1 {
+  color: white;
+  text-align: center;
+  text-shadow: 2px 2px grey;
+}
+
+p {
+  text-align: center;
+  font-family: verdana;
+  font-size: 20px;
+  color:dark;
+  text-shadow: 1px 1px 1px  grey;
+}
+
+label {
+	font-family: verdana;
+  font-size: 12px;
+  
+}
+input#formula {
+  border-style: ridge;
+   background-color: antiquewhite;
+}
+input#start {
+  border-style: ridge;
+   background-color: antiquewhite;
+}
+input#stop {
+  border-style: ridge;
+   background-color: antiquewhite;
+}
+input#step {
+  border-style: ridge;
+   background-color: antiquewhite;
+}
+input#submit:hover {
+    display: inline-block;
+    border-radius:12px;
+    background-color: grey;
+    border: solid;
+    color: 	#ccff66;
+    text-align: center;
+    transition: all 0.5s;
+    cursor: pointer;
+   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}input#submit {
+     border-radius:12px;
+    background-color: grey;
+  color: antiquewhite;
+}

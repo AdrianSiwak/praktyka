@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<!--<style>
+body {
+  background-color: linen;
+}
+h1 {
+  color: blue;
+  text-align: center;
+  border-style: 6px solid red;
+  background-color: darktgrey;
+}
+p {
+text-align: center;
+}
+{{form.submit()}} {
+  transition-duration: 0.4s;
+}
+
+form.formula:hover {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+</style>-->
+</head>
+<body>
+{% block content %}
+
+    <h1>Odwrotna Notacja Polska</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.formula.label }}<br>
+            {{ form.formula(size=32) }}<br>
+			{{form.start.label}}<br>
+			{{form.start}}<br>
+			{{form.stop.label}}<br>
+			{{form.stop}}<br>
+			{{form.step.label}}<br>
+			{{form.step}}<br>
+			
+			{% for error in form.formula.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}
+
+</body>
+</html>

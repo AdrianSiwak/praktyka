@@ -1,0 +1,39 @@
+
+<!doctype html>
+<html>
+    <head>
+		<title>Odwrotna Notacja Polska</title>
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+		<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    <style>
+body {
+	background-color: linen;
+}
+h1 {
+  color: white;
+  text-align: center;
+  border-style: 6px solid red;
+  background-color: lightgrey;
+  border-radius: 12px;
+  text-shadow: 2px 2px grey;
+}
+	</style>
+	</head>
+    <body>
+<h1>{{S}}</h1>
+<div class="ct-chart ct-golden-section" id="chart1"></div>
+{% block content %}
+<script>
+  // Initialize a Line chart in the container with the ID chart1
+  new Chartist.Line('#chart1', {
+    labels: {{ x }},
+    series: [{{ y }}]
+  });
+
+</script>
+
+ 
+ {% endblock %}
+
+    </body>
+</html>

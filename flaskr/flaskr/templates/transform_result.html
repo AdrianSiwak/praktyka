@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+	<title>Zamiana infix do onp</title>
+</head>
+<body>
+{% block content %}
+
+    <h1>Odwrotna Notacja Polska</h1>
+	Równanie: <br>
+	{{ formula }}
+	<br><br>
+	Wynik:<br>{% for elem in result: %}
+	{{ elem }} 
+	{% endfor %}
+
+{% endblock %}
+
+</body>
+</html>
